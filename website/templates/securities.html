@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
+    <link rel="shortcut icon" href="#" />
+</head>
+<body>
+
+</body>
+    <div class="title flex-container-col">
+        <img src="/static/assets/logo.svg" width="100px" height="100px">
+        <div style="width: 100%"><h1><a href="{{ url_for('index') }}">How the chicken gets made</a></h1></div>
+        <img src="/static/assets/logo.svg" width="100px" height="100px">
+    </div>
+    <div class="flex-container-col">
+        <div class="sideleft"></div>
+        <div class="main">
+            <h3>Fixed-income vs Variable-income Securities</h3>
+            <p>
+                A fixed-income security/investment is expected to provide return through fixed periodic payments and an eventual return of principal. The most common form of fixed-income security is a bond.
+            </p>
+            <p>
+                A variable-income security provides return based on market forces. They are more volatile than fixed-income securities, with the most common type being stocks and floating rate bonds.
+            </p>
+            <h3>Stocks</h3>
+            <p>
+                Stock represents ownership of a company and can be bought through brokerages like Fidelity and Robinhood. Profit can be gained from either selling a stock, or receiving dividends. Dividends are company payouts to holders of their stock, commonly in the form of cash through the brokerage and payed according to a company-specific schedule. Payout ratio is (company profits) / (dividend payout) and explains how much the company cares about growth through self-reinvestment. Not all shares pay dividends.
+            </p>
+            <p>
+                A key metric to consider when choosing stocks is P/E ratio, or Price-to-Earnings ratio. P/E ratio is current stock price/EPS. EPS is calculated by dividing a company's total earnings, not just profit, over the amount of existing shares. P/E ratio determines how much an investor is willing to pay for a dollar of company earnings. High P/E shows investors are expecting company growth, or that the company may be overvalued. It's important to compare a stock's P/E to other stocks from the same sector and market P/E ratios to assess true value.
+            </p>
+            <h3>Bonds</h3> <!--https://europe.pimco.com/en-eu/resources/education/everything-you-need-to-know-about-bonds-->
+            <p>
+                Bonds are loans issued by entities, such as the government and companies, that require capital. A bond is issued at a face value that varies on the market depending on coupon rate, length of time until expiration, and credit quality of issuer. Coupon rate is the interest on each payment, and tends to be greater the riskier or lengthier a bond is. Bonds provide a regular series of payments based on the coupon rate, with a large payment at the end to repay face value. Bonds tend to have lower, more stable and continuous returns than stock, and have priority payout over stockholders when issuing entity goes bankrupt.
+            </p>
+            <p>
+                Bond yield and prices are inversely related and affected by interest rates. Interest rates are determined by the rate at which the central government's bank lends to other banks. In the short term, when interest rates increase, older bonds are less valuable as newer bonds are issued with higher coupon rates, leading to older bonds being sold at a discount. When interest rates decrease, older bonds pay out more and can be sold on the secondary market at a premium and vice versa. For these reasons, zero-coupon bonds, or bonds with imputed interest rate, can be bought when investors expect a decline in interest rates. The lack of coupon also means that the holder does not need to pay federal taxes on bond coupon.
+            </p>
+            <p>
+                Bond creditworthiness is rated from AAA to D, with bonds below B class generally being speculative bonds that are likely to default. These ratings are issed through various services like Standard & Poor's and Moody's Investors Service. Yield rate is inversely related to creditworthiness. An example is Argentina's 10Y Bonds, which have an estimated 49.7% yield as of early 2023.
+            </p>
+            <p>
+                Duration describes how sensitive a bond's price is to interest rate movements and incorporates coupon, face value, and maturity length. For each percentage that interest rates move, a bond with duration of X years will inversely move in price by X%. For example, if interest rates fall by 1%, a bond with duration two years increases in price by 2% and a bond with duration ten years increases 10%. It's also important to note that high yield bonds have been empirically found to move against duration.
+            </p>
+            <h3>Swaps</h3>
+            <p>
+                A swap is a derivative contract between two parties to exchange cash flows for a set amount of time. The two most common examples are interest rate and currency swaps. An example of an interest rate swap is between two companies A and B. They enter a 5-year swap where A pays B 5% annually on a notional principal of 100 million, and B pays A LIBOR + 1% on a notional principal of 100 million. The notional principals do not change hands as they are the same amount, meaning only the difference in interest payments are exchanged annually. Let's assume that company A and B also enter a currency swap. A wants euros from B, and B wants dollars from A. They agree upon a 5 year swap on a principal of 100 million dollars, and A pays B 100 mil dollars, and B pays A 100*X mil euros where X is the converted rate of dollar to euro. The companies then pay each other the currency interest rates at an agreed upon interval using prevailing exchange rates.
+            </p>
+            <p>
+                Almost all swap contracts are done on the OTC through a broker-dealer network meaning they are not listed on centralized exchanges like NYSE. Entities use swaps for commercial needs or comparative advantage. Swaps allow floating rates to be converted into fixed rates, alleviating mismatch payments between assets and liabilities. An entity that can acquire certain types of financing but wants to operate in a separate market also benefits from using a swap. For example, a US based company that wants to expand into EU can receive more favorable financing on a USD loan, then convert it to euros through a swap with another corporation.
+            </p>
+            <p>
+                An individual may wish to enter the swap market as a way to speculate on the directions of interest rates. Unlike a bond, entering an interest rate swap agreement gives exposure to immediate interest rate movements without cash outlay. However, swap contracts are highly customized and dependent on timely counterparty payment making them less beginner friendly when compared to other investments.
+            </p>
+        </div>
+        <div id="rightContent" class="sideright"></div>
+    </div>
+</html>

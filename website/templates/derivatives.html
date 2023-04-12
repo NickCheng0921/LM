@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
+    <link rel="shortcut icon" href="#" />
+</head>
+<body>
+
+</body>
+    <div class="title flex-container-col">
+        <img src="/static/assets/logo.svg" width="100px" height="100px">
+        <div style="width: 100%"><h1><a href="{{ url_for('index') }}">How the chicken gets made</a></h1></div>
+        <img src="/static/assets/logo.svg" width="100px" height="100px">
+    </div>
+    <div class="flex-container-col">
+        <div class="sideleft"></div>
+        <div class="main">
+            <h3>Definition</h3>
+            <!--https://www.managementstudyguide.com/what-are-derivatives.htm-->
+            <p>
+                A financial derivative is a contract linked to an indicator or commodity. They are agreements to exchange a commodity at a later date at a fixed price today. A derivative can be bought on anything, with assets like stocks, bonds, and commodities being the most common.
+            </p>
+            <p>
+                Derivative contracts tend to have high leverage ratios, and are zero sum, meaning that for one party to gain value from the contract, another must lose. 
+            </p>
+            <h3>Usage</h3>
+            <p>
+                Derivatives were initially created as a tool for hedging, which is managing price risk through taking offsetting positions on exisiting positions. An example could be airline companies buying contracts on jet fuel and crude oil in order to better predict company operations in case of fluctuations on the price of fuel. 
+            </p>
+            <p>
+                For the average investor, derivatives are more useful as a tool for speculation rather than for hedging owned assets. Derivatives allow speculators to generate profits with large leverage through predicting price movements without owning the underlying asset. There are 4 basic types of derivatives to consider: forward contracts, futures contracts, options, and swaps.
+            </p>
+            <h3>Forwards, Futures, Options and Swaps</h3>
+            <p>
+                A forward contract is an agreement between two parties to exchange an asset at a specified price at a future date. Each contract is highly customizable and not required to be publicly viewable as they are OTC. 
+            </p>
+            <p>
+                A futures contract is listed on an exchange, making them publicly viewable, and also consists of a future asset exchange between two parties at a specified price. The difference between futures and forwards contracts is that futures have stricter formats as they have to be listed on an exchange. THe future will list expiration date, size, and all other pertinent information. Another key difference is that in a futures contract, both buyer and seller make an agreement with the exchange, and not each other.
+            </p>
+            <p>
+                An options contract is an exchange listed asymmetrical right to buy or sell an asset at a later date. The party that has the right to choose whether to buy or sell the asset also has to pay a premium for the right to not exercise their option. A call option gives the buyer the opportunity to buy an asset for a given price at a later date, while a put option gives the right to sell. An individual can also choose to be on the long or short side of an option, with long approaches being bullish and short approaches being bearish. I'll go into examples of the 4 types of options in a different set of notes in greater detail.
+            </p>
+            <p>
+                Swaps allow for exchanges of cash flows, with the most basic two types being interest rates and forex swaps. I go into greater detail under the securities set of notes.
+            </p>
+        </div>
+        <div id="rightContent" class="sideright"></div>
+    </div>
+</html>

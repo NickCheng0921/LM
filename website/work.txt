@@ -1,0 +1,8 @@
+2/22/23
+Current Issues:
+    - plots require a px defined height, rather than a % to stack plots
+    - place JS into a file that's imported
+    - don't repull tickers for models that exist
+
+    Larger Issues
+    - disable search and bake while baking

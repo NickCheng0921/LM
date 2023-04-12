@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/dashboard.css') }}">
+    <link rel="shortcut icon" href="#" />
+</head>
+<body>
+
+</body>
+    <div class="title flex-container-col">
+        <img src="/static/assets/logo.svg" width="100px" height="100px">
+        <div style="width: 100%"><h1><a href="{{ url_for('index') }}">How the chicken gets made</a></h1></div>
+        <img src="/static/assets/logo.svg" width="100px" height="100px">
+    </div>
+    <div class="flex-container-col">
+        <div class="sideleft"></div>
+        <div class="main">
+            <div id="searchBar">
+                <input id="ticker_input" value="RIVN" class="formInput">
+                <input id="ticker_submit" type="submit" class="formButtonEnabled" value="Search Tickers" onclick="searchTickers()">
+                <input id="bake_submit" type="submit" class="formButtonEnabled" value="Bake Chicken" onclick="bakeTickers()">
+            </div>
+            <script>
+                const COOKIE_LIFE = 10;
+                const PRED_CLOSE_TEXT = "Pred Close: $";
+                let currTickers = [];
+                //https://www.w3schools.com/js/js_cookies.asp
+                function setCookie(cname, cvalue, exdays) {
+                    const d = new Date();
+                    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+                    let expires = "expires="+ d.toUTCString();
+                    document.cookie = cname + "=" + cvalue + ";" + expires + ";SameSite=Lax;path=/";
+                }
+                function getCookie(cname) {
+                    let name = cname + "=";
+                    let decodedCookie = decodeURIComponent(document.cookie);
+                    let ca = decodedCookie.split(';');
+                    for(let i = 0; i <ca.length; i++) {
+                        let c = ca[i];
+                        while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                        }
+                        if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                        }
+                    }
+                    return "";
+                }
+                function renderTicker(ticker, html_id) {
+                    $.ajax({
+                        url: "{{ url_for('ticker') }}",
+                        method: "POST",
+                        data: { 'ticker': ticker },
+                        success: function(response) {
+                            let dP = [];
+                            for (let i = 0; i < response['adj_close'].length; i++) {
+                                let date = response['dates'][i]
+                                dP.push({x: new Date(response['dates'][i]), y:response['adj_close'][i]})
+                            }
+                            var chart = new CanvasJS.Chart(html_id, {
+                                animationEnabled: true,
+                                theme: "light2",
+                                backgroundColor: "#2E3440",
+                                title:{
+                                    text: response['name'],
+                                    fontColor: "#88c0d0"
+                                },
+                                axisX:{
+                                    labelFontColor: "#88c0d0"
+                                },
+                                axisY:{
+                                    labelFontColor: "#88c0d0"
+                                },
+                                data: [{        
+                                    type: "line",
+                                    indexLabelFontSize: 16,
+                                    dataPoints: dP
+                                }]
+                            });
+                            chart.render();
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
+                        }
+                    });
+                }
+                function renderBakeFields(ticker) {
+                    var bakeBox = document.createElement("div");
+                    bakeBox.id = "bakeBox"+ticker;
+                    bakeBox.classList.add("bakeBox");
+                    var closeVal = document.createElement("input");
+                    closeVal.id = "closeVal"+ticker;
+                    closeVal.classList.add("bakeOutput");
+                    closeVal.readOnly = true;
+                    closeVal.value = PRED_CLOSE_TEXT+"---";
+                    bakeBox.appendChild(closeVal);
+                    document.getElementById("rightContent").appendChild(bakeBox);
+                }
+                function searchTickers() {
+                    //split search query and filter empty strings
+                    currTickers = [];
+                    searchedTickers = document.getElementById("ticker_input").value.trim().split(" ").filter(o=>o);
+                    $('#mainContent').html("");
+                    $('#rightContent').html("");
+                    searchedTickers.forEach(function(tN) {
+                        tN = tN.toUpperCase();
+                        var newChartDiv = document.createElement("div");
+                        newChartDiv.id = "chart"+tN.toString();
+                        newChartDiv.classList.add("chart");
+                        document.getElementById("mainContent").appendChild(newChartDiv);
+                        renderBakeFields(tN);
+                        renderTicker(tN, "chart"+tN.toString());
+                    });
+                    setCookie('searchedTickers', JSON.stringify(searchedTickers), exdays=10);
+                    currTickers = searchedTickers;
+                }
+                function setupPage() {
+                    var previousTickers = getCookie('searchedTickers');
+                    if (previousTickers != "") {
+                        $('#ticker_input').val(JSON.parse(previousTickers).join(' '));
+                    }
+                    searchTickers();
+                }
+                function bakeTickers() {
+                    //disable search and bake buttons to prevent request spam
+                    document.getElementById('ticker_submit').className = "formButtonDisabled";
+                    document.getElementById('bake_submit').className = "formButtonDisabled";
+                    $('#ticker_submit').prop('disabled', true);
+                    $('#bake_submit').prop('disabled', true);
+                    $.ajax({
+                        url: "{{ url_for('bake') }}",
+                        method: "POST",
+                        data: { 'tickers': currTickers.join(" ") },
+                        success: function(response) {
+                            currTickers.forEach(function(t) {
+                                document.getElementById("closeVal"+t).value = PRED_CLOSE_TEXT+response[t].toString();
+                            });
+                            document.getElementById('ticker_submit').className = "formButtonEnabled";
+                            document.getElementById('bake_submit').className = "formButtonEnabled";
+                            $('#ticker_submit').prop('disabled', false);
+                            $('#bake_submit').prop('disabled', false);
+                        },
+                        error: function(xhr) {
+                            console.log(xhr);
+                        }
+                    });
+                }
+                window.onload =()=> {setupPage()}
+            </script>
+            <div id="mainContent"></div>
+        </div>
+        <div id="rightContent" class="sideright"></div>
+    </div>
+</html>

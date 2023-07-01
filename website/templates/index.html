@@ -4,32 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script type="module" src="{{url_for('static', filename='scripts/index.js') }}"></script>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
     <link rel="shortcut icon" href="#" />
 </head>
-<body>
 
-</body>
-    <div class="title flex-container-col">
-        <img src="/static/assets/logo.svg" width="100px" height="100px">
-        <div style="width: 100%"><h1>How the chicken gets made</h1></div>
-        <img src="/static/assets/logo.svg" width="100px" height="100px">
-    </div>
-    <div class="flex-container-col">
-        <div class="sideleft"></div>
-        <div class="main">
-            <h1>Interactive</h1>
-            <a href="{{ url_for('dashboard') }}">Dash</a>
-            <h1>Notes</h1>
-            <a href="{{ url_for('securities') }}">Securities</a>
-            <br><br>
-            <a href="{{ url_for('interest_rates') }}">Interest Rates & Foreign Policy</a>
-            <br><br>
-            <a href="{{ url_for('derivatives') }}">Derivatives</a>
-            <br><br>
-            <a href="{{ url_for('options') }}">More Info on Options</a>
+<body>
+    <div class="container">
+        <title>Drag and Drop Sound File</title>
+        <div id="drop-area">
+            <p>Drag and drop a sound file here</p>
         </div>
-        <div id="rightContent" class="sideright"></div>
     </div>
+    <div id="waveform"></div>
+    <button id="playToggleButton">Play</button>
+    <input type="range" id="volumeSlider" min="0" max="1" step="0.02" value="1">
+</body>
+
 </html>

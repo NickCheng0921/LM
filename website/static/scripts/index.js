@@ -1,4 +1,6 @@
 import WaveSurfer from 'https://unpkg.com/wavesurfer.js@beta'
+import Spectrogram from 'https://unpkg.com/wavesurfer.js@beta/dist/plugins/spectrogram.js'
+import { velocity_blue_map } from "../scripts/colorMap.js"
 
 const STARTING_VOLUME = 0.5;
 var wavesurfer = null;
@@ -14,6 +16,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	// Handle dropped files
 	dropArea.addEventListener('drop', function (e) {
 		e.preventDefault();
+		document.getElementById('drop-area').style.display = 'none';
 		
 		var files = e.dataTransfer.files;
 		if (files.length > 0) {
@@ -25,17 +28,17 @@ window.addEventListener('DOMContentLoaded', function() {
 				autplay: 'false',
 				container: '#waveform',
 				waveColor: '#88c0d0',
-				progressColor: '#7cb0be'
+				progressColor: '#7cb0be',
+				url: soundFileURL,
 			});
 
-			wavesurfer.load(soundFileURL);
 			wavesurfer.on('interaction', () => {
 				wavesurfer.play()
-				document.getElementById('playToggleButton').textContent = 'Pause';
 			})
 
 			setupPlayButton();
 			setupVolumeSlider();
+			setupSpectrogram();
 		}
 	});
 });
@@ -45,10 +48,8 @@ function setupPlayButton() {
 	toggleButton.addEventListener('click', function() {
 	  if (wavesurfer.isPlaying()) {
 		wavesurfer.pause();
-		toggleButton.textContent = 'Play';
 	  } else {
 		wavesurfer.play();
-		toggleButton.textContent = 'Pause';
 	  }
 	});
 }
@@ -61,4 +62,14 @@ function setupVolumeSlider() {
 	volumeSlider.addEventListener('input', function(event) {
 		wavesurfer.setVolume(event.target.value);
 	});
+}
+
+function setupSpectrogram() {
+	wavesurfer.registerPlugin(
+		Spectrogram.create({
+			labels: true,
+			container: '#spectrogram',
+			colorMap: velocity_blue_map,
+		}),
+	)
 }
